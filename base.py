@@ -7,6 +7,7 @@ UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'zip'}
 
 app = Flask(__name__)
+app.secret_key = b"'Z\tF\x84\xbf\xb5C\xcfk\xc3\x8c"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
@@ -26,9 +27,12 @@ def index():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if file and not allowed_file(file.filename):
+            flash('Invalid file')
+            return redirect(request.url)
+        if file:
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             #add andrew integration here
-            return render_template('index.html', title='test page for now')
-    return render_template('index.html', title='test page for now')
+            return render_template('index.html', title='test page for now', status='Upload success')
+    return render_template('index.html', title='test page for now', status='Pending upload')

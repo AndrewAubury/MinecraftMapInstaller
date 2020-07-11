@@ -7,10 +7,18 @@
 </head>
 
 <body>
-    <h1>Upload new File</h1>
+    <h1>Upload new Minecraft map</h1>
+    <p>{{ status }}</p>
     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
       <input type=submit value=Upload>
     </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 </body>
 </html>
