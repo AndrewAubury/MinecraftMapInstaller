@@ -39,8 +39,8 @@ def index():
             #add andrew integration here
             status = pc.setupFromZIP(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             if status:
-                return render_template('Index.html', title='test page for now', status='Upload success')
+                return render_template('index.html', title='test page for now', status='Upload success')
             else:
                 flash('Invalid file')
                 return redirect(request.url)
-    return render_template('Index.html', title='test page for now', status='Pending upload')
+    return render_template('index.html', title='test page for now', status='Pending upload')
