@@ -3,6 +3,8 @@ from flask import Flask
 from flask import render_template, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
+from PterodactylControl import PterodactylControl
+
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'zip'}
 
@@ -10,6 +12,7 @@ app = Flask(__name__)
 app.secret_key = b"'Z\tF\x84\xbf\xb5C\xcfk\xc3\x8c"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+pc = PterodactylControl("./server/")
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -34,5 +37,7 @@ def index():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             #add andrew integration here
+            pc.setupFromZIP(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            
             return render_template('index.html', title='test page for now', status='Upload success')
     return render_template('index.html', title='test page for now', status='Pending upload')
