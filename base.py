@@ -31,13 +31,16 @@ def index():
             flash('No selected file')
             return redirect(request.url)
         if file and not allowed_file(file.filename):
-            flash('Invalid file')
+            flash('Invalid file type')
             return redirect(request.url)
         if file:
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             #add andrew integration here
-            pc.setupFromZIP(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            
-            return render_template('index.html', title='test page for now', status='Upload success')
+            status = pc.setupFromZIP(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            if status:
+                return render_template('index.html', title='test page for now', status='Upload success')
+            else:
+                flash('Invalid file')
+                return redirect(request.url)
     return render_template('index.html', title='test page for now', status='Pending upload')
