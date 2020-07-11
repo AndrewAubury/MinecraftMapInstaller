@@ -4,7 +4,6 @@ import time
 import nbt
 import urllib.request
 import json
-from unrar import rarfile
 
 
 class PterodactylControl:
@@ -14,12 +13,7 @@ class PterodactylControl:
 
     def setupFromZIP(self, zip_location):
         temp_path = "./tmp"
-        _, file_extension = os.path.splitext(zip_location)
-        if file_extension == '.rar':
-            rFile = rarfile.RarFile(zip_location)
-            rFile.extractall(temp_path)
-        else:
-            shutil.unpack_archive(zip_location, temp_path)
+        shutil.unpack_archive(zip_location, temp_path)
         level_check = os.path.join(temp_path, "level.dat")
         if os.path.exists(level_check):
             res = self.setupWorld(temp_path)
