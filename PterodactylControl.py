@@ -16,19 +16,21 @@ class PterodactylControl:
         shutil.unpack_archive(zip_location, temp_path)
         level_check = os.path.join(temp_path, "level.dat")
         if os.path.exists(level_check):
-            self.setupWorld(temp_path)
+            res = self.setupWorld(temp_path)
             shutil.rmtree(temp_path)
+            return res
         else:
             for check_dir in os.listdir(temp_path):
                 check_dir = os.path.join(temp_path, check_dir)
                 level_check = os.path.join(check_dir, "level.dat")
                 print(level_check)
                 if os.path.exists(level_check):
-                    self.setupWorld(check_dir)
+                    res = self.setupWorld(check_dir)
                     shutil.rmtree(temp_path)
-                    return
+                    return res
             print("No valid world file was found")
             shutil.rmtree(temp_path)
+            return False
 
     def setupWorld(self, world_location):
         if not os.path.isdir(self.srv):
@@ -46,6 +48,7 @@ class PterodactylControl:
                 os.remove(srv_icon)
             shutil.copyfile(world_icon,srv_icon)
         self.setupServer();
+        return True
 
     def setupServer(self):
         nbt_location = os.path.join(self.srv, os.path.join("world","level.dat"))
