@@ -47,13 +47,13 @@ class PterodactylControl:
             if os.path.exists(srv_icon):
                 os.remove(srv_icon)
             shutil.copyfile(world_icon,srv_icon)
-        self.setupServer();
+        self.setupServer()
         return True
 
     def setupServer(self):
         nbt_location = os.path.join(self.srv, os.path.join("world","level.dat"))
         nbtfile = nbt.nbt.NBTFile(nbt_location, 'rb')
-        version = nbtfile["Data"]["Version"]["Name"];
+        version = nbtfile["Data"]["Version"]["Name"]
         print("Minecraft Map Uses: "+str(version))
         jar_location = os.path.join(self.srv, "server.jar")
         if os.path.exists(jar_location):
