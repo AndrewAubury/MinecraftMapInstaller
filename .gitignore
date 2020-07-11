@@ -141,3 +141,6 @@ cython_debug/
 test.zip
 map-test/
 server/
+
+# Uploads folder
+uploads/*
