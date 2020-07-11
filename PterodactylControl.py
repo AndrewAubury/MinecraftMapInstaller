@@ -77,7 +77,3 @@ class PterodactylControl:
                 shutil.copytree(s, d, symlinks, ignore)
             else:
                 shutil.copy2(s, d)
-
-
-pc = PterodactylControl("./server/")
-pc.setupFromZIP("test.zip")
